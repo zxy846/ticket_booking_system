@@ -1,5 +1,42 @@
-__pycache__ 
-*.pyc 
-venv/ 
-db.sqlite3 
-staticfiles/ 
+# Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Database
+*.sqlite3
+*.db
+db.sqlite3
+
+# Static files
+/staticfiles/
+/media/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# Django migrations (保留 migrations 文件夹但忽略其他)
+!*/migrations/
+!*/migrations/*.py
+*/migrations/__pycache__/
