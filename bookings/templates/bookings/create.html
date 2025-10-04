@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}填写订单{% endblock %}
+{% block content %}
+<h2>填写乘客信息</h2>
+<form method="post" class="row g-3">
+  {% csrf_token %}
+  <div class="col-md-6">
+      <label class="form-label">名</label>
+      {{ form.first_name }}
+  </div>
+  <div class="col-md-6">
+      <label class="form-label">姓</label>
+      {{ form.last_name }}
+  </div>
+  <div class="col-md-6">
+      <label class="form-label">出生日期</label>
+      {{ form.date_of_birth }}
+  </div>
+  <div class="col-md-6">
+      <label class="form-label">护照号码</label>
+      {{ form.passport_number }}
+  </div>
+  <div class="col-md-6">
+      <label class="form-label">邮箱</label>
+      {{ form.email }}
+  </div>
+  <div class="col-md-6">
+      <label class="form-label">手机号码</label>
+      {{ form.phone }}
+  </div>
+  <div class="col-12">
+      <button type="submit" class="btn btn-primary">确认并提交订单</button>
+  </div>
+</form>
+{% endblock %}

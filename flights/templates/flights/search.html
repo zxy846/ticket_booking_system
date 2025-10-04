@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}搜索航班{% endblock %}
+{% block content %}
+<h2>搜索航班</h2>
+<form method="get" action="{% url 'flights:flight_results' %}" class="row g-3">
+  <div class="col-md-4">
+    <label class="form-label">出发地</label>
+    <input type="text" name="dep" class="form-control" placeholder="城市" required>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">目的地</label>
+    <input type="text" name="arr" class="form-control" placeholder="城市" required>
+  </div>
+  <div class="col-md-2">
+    <label class="form-label">出发日期</label>
+    <input type="date" name="date" class="form-control" required>
+  </div>
+  <div class="col-md-2 d-flex align-items-end">
+    <button type="submit" class="btn btn-primary w-100">搜索</button>
+  </div>
+</form>
+{% endblock %}

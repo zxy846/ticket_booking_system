@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}预订成功{% endblock %}
+{% block content %}
+<div class="alert alert-success">
+  <h4>预订成功！</h4>
+  <p>您的预订参考号：<strong>{{ booking.booking_reference }}</strong></p>
+  <p>航班：<strong>{{ booking.flight.flight_number }}</strong></p>
+  <p>总价：¥{{ booking.total_price }}</p>
+</div>
+<a class="btn btn-primary" href="{% url 'bookings:my_bookings' %}">查看我的订单</a>
+{% endblock %}
