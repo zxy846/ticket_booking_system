@@ -27,7 +27,6 @@ INSTALLED_APPS = [
 
     'flights',
     'bookings',
-    'pages',
     'django_extensions'
 
 ]
