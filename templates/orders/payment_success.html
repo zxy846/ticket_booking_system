@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}支付成功 - 航班预订系统{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 3rem 0;">
+    <h1 style="color: #28a745;">🎉 支付成功！</h1>
+    <p>您的订单已支付成功，我们会尽快为您处理。</p>
+    <div style="margin: 2rem 0;">
+        <a href="{% url 'order_list' %}" class="btn">查看我的订单</a>
+        <a href="{% url 'flight_list' %}" style="margin-left: 1rem;">继续预订</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}搜索航班 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>搜索航班</h1>
+<p>使用此页面搜索适合您的航班。</p>
+
+<div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 4px;">
+    <h3>搜索条件</h3>
+    <form style="display: grid; gap: 1rem; max-width: 500px;">
+        <div>
+            <label>出发地：</label>
+            <input type="text" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <div>
+            <label>目的地：</label>
+            <input type="text" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <div>
+            <label>出发日期：</label>
+            <input type="date" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <button type="submit" class="btn">搜索航班</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}我的订单 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>我的订单</h1>
+<p>这里显示您的所有订单。</p>
+<ul>
+    <li><a href="{% url 'order_detail' 1 %}">订单 #1</a></li>
+    <li><a href="{% url 'order_detail' 2 %}">订单 #2</a></li>
+</ul>
+{% endblock %}

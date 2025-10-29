@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}航班详情 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>航班详情 #{{ flight_id }}</h1>
+<p>这里是航班 {{ flight_id }} 的详细信息页面。</p>
+
+<div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 4px; margin: 1rem 0;">
+    <h3>航班信息</h3>
+    <p><strong>航班号：</strong> CA{{ flight_id }}01</p>
+    <p><strong>出发地：</strong> 北京首都国际机场</p>
+    <p><strong>目的地：</strong> 上海浦东机场</p>
+    <p><strong>出发时间：</strong> 2024-01-15 08:00</p>
+    <p><strong>到达时间：</strong> 2024-01-15 10:30</p>
+    <p><strong>价格：</strong> <span style="color: #e74c3c; font-size: 1.2em;">¥880</span></p>
+</div>
+
+<a href="{% url 'flight_book' flight_id %}" class="btn">预订此航班</a>
+<a href="{% url 'flight_list' %}" style="margin-left: 1rem;">返回列表</a>
+{% endblock %}

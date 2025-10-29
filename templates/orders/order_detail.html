@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}订单详情 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>订单详情 #{{ order_id }}</h1>
+<p>这里是订单 {{ order_id }} 的详细信息。</p>
+
+<div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 4px; margin: 1rem 0;">
+    <h3>订单信息</h3>
+    <p><strong>订单状态：</strong> 待支付</p>
+    <p><strong>航班信息：</strong> 北京 → 上海</p>
+    <p><strong>乘客：</strong> 张三</p>
+    <p><strong>金额：</strong> ¥880</p>
+    <p><strong>下单时间：</strong> 2024-01-10 14:30</p>
+</div>
+
+<div>
+    <a href="{% url 'order_payment' order_id %}" class="btn">立即支付</a>
+    <a href="{% url 'order_cancel' order_id %}" style="margin-left: 1rem; color: #dc3545;">取消订单</a>
+    <a href="{% url 'order_list' %}" style="margin-left: 1rem;">返回订单列表</a>
+</div>
+{% endblock %}

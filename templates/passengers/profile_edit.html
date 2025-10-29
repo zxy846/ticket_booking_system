@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}编辑信息 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>编辑个人信息</h1>
+<p>修改您的个人信息。</p>
+<div style="max-width: 500px;">
+    <form>
+        <div style="margin-bottom: 1rem;">
+            <label>用户名：</label>
+            <input type="text" value="示例用户" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label>邮箱：</label>
+            <input type="email" value="user@example.com" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label>手机号码：</label>
+            <input type="tel" value="13800138000" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <button type="submit" class="btn">保存修改</button>
+        <a href="{% url 'passenger_profile' %}" style="margin-left: 1rem;">取消</a>
+    </form>
+</div>
+{% endblock %}

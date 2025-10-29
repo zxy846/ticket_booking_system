@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}预订航班 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>预订航班 #{{ flight_id }}</h1>
+<p>您正在预订航班 {{ flight_id }}，请填写乘客信息。</p>
+
+<div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 4px; max-width: 500px;">
+    <form>
+        <div style="margin-bottom: 1rem;">
+            <label>乘客姓名：</label>
+            <input type="text" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label>身份证号：</label>
+            <input type="text" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label>联系电话：</label>
+            <input type="tel" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <button type="submit" class="btn">确认预订</button>
+    </form>
+</div>
+{% endblock %}

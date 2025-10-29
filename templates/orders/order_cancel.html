@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}取消订单 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>取消订单 #{{ order_id }}</h1>
+<p>您确定要取消这个订单吗？</p>
+
+<div style="border: 1px solid #ffcccc; background: #fff5f5; padding: 1.5rem; border-radius: 4px; max-width: 500px;">
+    <h3>确认取消</h3>
+    <p>订单取消后将无法恢复，请谨慎操作。</p>
+    
+    <div style="margin-top: 1.5rem;">
+        <button type="button" style="background: #dc3545;" class="btn">确认取消</button>
+        <a href="{% url 'order_detail' order_id %}" style="margin-left: 1rem;">返回订单详情</a>
+    </div>
+</div>
+{% endblock %}

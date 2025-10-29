@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}订单支付 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>订单支付 #{{ order_id }}</h1>
+<p>请完成订单支付。</p>
+
+<div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 4px; max-width: 500px;">
+    <h3>支付信息</h3>
+    <p><strong>订单金额：</strong> ¥880</p>
+    
+    <form>
+        <div style="margin-bottom: 1rem;">
+            <label>支付方式：</label>
+            <select style="padding: 0.5rem; width: 100%;">
+                <option>支付宝</option>
+                <option>微信支付</option>
+                <option>银行卡</option>
+            </select>
+        </div>
+        <button type="submit" class="btn">确认支付</button>
+    </form>
+</div>
+{% endblock %}

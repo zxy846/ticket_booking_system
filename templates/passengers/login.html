@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}用户登录 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>用户登录</h1>
+<p>登录您的账户。</p>
+<div style="max-width: 400px;">
+    <form>
+        <div style="margin-bottom: 1rem;">
+            <label>用户名：</label>
+            <input type="text" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label>密码：</label>
+            <input type="password" style="padding: 0.5rem; width: 100%;">
+        </div>
+        <button type="submit" class="btn">登录</button>
+    </form>
+    <p style="margin-top: 1rem;">
+        还没有账户？<a href="{% url 'passenger_register' %}">立即注册</a>
+    </p>
+</div>
+{% endblock %}

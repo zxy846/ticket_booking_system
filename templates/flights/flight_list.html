@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}航班列表 - 航班预订系统{% endblock %}
+
+{% block content %}
+<h1>航班列表</h1>
+<p>这里是航班列表页面，展示所有可预订的航班。</p>
+
+<div style="margin: 2rem 0;">
+    <a href="{% url 'flight_search' %}" class="btn">搜索航班</a>
+</div>
+
+<ul style="list-style: none; padding: 0;">
+    <li style="padding: 1rem; border: 1px solid #ddd; margin: 0.5rem 0; border-radius: 4px;">
+        <a href="{% url 'flight_detail' 1 %}" style="text-decoration: none; color: #333;">
+            <strong>航班 #1</strong> - 北京到上海 
+            <span style="float: right;">¥880</span>
+        </a>
+    </li>
+    <li style="padding: 1rem; border: 1px solid #ddd; margin: 0.5rem 0; border-radius: 4px;">
+        <a href="{% url 'flight_detail' 2 %}" style="text-decoration: none; color: #333;">
+            <strong>航班 #2</strong> - 上海到广州
+            <span style="float: right;">¥650</span>
+        </a>
+    </li>
+    <li style="padding: 1rem; border: 1px solid #ddd; margin: 0.5rem 0; border-radius: 4px;">
+        <a href="{% url 'flight_detail' 3 %}" style="text-decoration: none; color: #333;">
+            <strong>航班 #3</strong> - 广州到深圳
+            <span style="float: right;">¥420</span>
+        </a>
+    </li>
+</ul>
+{% endblock %}
