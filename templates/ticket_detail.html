@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}机票详情 - {{ ticket.booking_reference }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="flex flex-between flex-center mb-lg">
+        <h1>Flight details</h1>
+        <div class="flex gap-sm">
+            <a href="{% url 'ticket_list' %}" class="btn btn-secondary">← Back to List</a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-auto gap-md">
+        <div class="info-item">
+            <div class="info-label">Booking reference number</div>
+            <div style="font-size: 1.2rem; font-weight: bold;">{{ ticket.booking_reference }}</div>
+        </div>
+        
+        <div class="info-item">
+            <div class="info-label">Status</div>
+            <div style="color: {% if ticket.status == 'confirmed' %}#28a745{% else %}#dc3545{% endif %}; font-weight: bold;">
+                {{ ticket.get_status_display }}
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Seat number</div>
+            <div>{{ ticket.seat_number }}</div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">price</div>
+            <div>{{ ticket.price }}</div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Passenger information</div>
+            <div>
+                passenger {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}<br>
+                email {{ ticket.passenger.email }}<br>
+                phone {{ ticket.passenger.phone_number }}
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Flight information</div>
+            <div>
+                🛫 {{ ticket.flight.flight_number }}<br>
+                {{ ticket.flight.departure_airport }} → {{ ticket.flight.arrival_airport }}<br>
+                Departure time: {{ ticket.flight.departure_time|date:"Y-m-d H:i" }}<br>
+                Arrival time: {{ ticket.flight.arrival_time|date:"Y-m-d H:i" }}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

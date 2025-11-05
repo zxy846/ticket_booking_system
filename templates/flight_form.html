@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Aviation Management System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ title }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- 使用Django表单的as_p方法自动渲染 -->
+        {{ form.as_p }}
+
+        <!-- 显示表单错误 -->
+        {% if form.errors %}
+            <div class="alert" style="background: #f8d7da; color: #721c24;">
+                <strong>Please correct the following errors:</strong>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="flex gap-sm" style="margin-top: var(--space-lg); border-top: 1px solid #eee; padding-top: var(--space-lg);">
+            <button type="submit" class="btn btn-primary">💾 Save Flight</button>
+            {% if flight %}
+                <a href="{% url 'flight_detail' flight.id %}" class="btn btn-secondary">Cancel</a>
+            {% else %}
+                <a href="{% url 'flight_list' %}" class="btn btn-secondary">Cancel</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<style>
+    /* 改善表单样式 */
+    form p {
+        margin-bottom: var(--space-md);
+    }
+
+    form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: var(--space-xs);
+        color: #555;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.7rem;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(42, 82, 152, 0.2);
+    }
+
+    .errorlist {
+        color: var(--danger-color);
+        list-style: none;
+        padding: 0;
+        margin: var(--space-xs) 0 0 0;
+        font-size: 0.9rem;
+    }
+
+    .errorlist li {
+        background: #f8d7da;
+        padding: 0.5rem;
+        border-radius: 3px;
+        margin-bottom: 0.25rem;
+    }
+
+    /* 选择框样式 */
+    select.form-control {
+        background-color: white;
+    }
+
+    /* 日期时间输入框样式 */
+    input[type="datetime-local"] {
+        font-family: inherit;
+    }
+</style>
+{% endblock %}

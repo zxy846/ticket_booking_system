@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ flight.flight_number }} - Flight Details{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="flex flex-between flex-center mb-lg">
+        <h1>Flight Details</h1>
+        <a href="{% url 'flight_list' %}" class="btn btn-secondary">← Back to List</a>
+    </div>
+
+    <div class="flight-info">
+        <div class="info-item">
+            <div class="info-label">Flight Number</div>
+            <div style="font-size: 1.2rem; font-weight: bold;">{{ flight.flight_number }}</div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Route</div>
+            <div style="font-size: 1.2rem;">
+                🛫 {{ flight.departure_airport }} → 🛬 {{ flight.arrival_airport }}
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Departure Time</div>
+            <div>{{ flight.departure_time|date:"Y-m-d H:i" }}</div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Arrival Time</div>
+            <div>{{ flight.arrival_time|date:"Y-m-d H:i" }}</div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Total Seats</div>
+            <div>{{ flight.total_seats }} seats</div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Available Seats</div>
+            <div style="font-size: 1.2rem; color: {% if flight.available_seats > 10 %}#28a745{% elif flight.available_seats > 0 %}#ffc107{% else %}#dc3545{% endif %};">
+                {{ flight.available_seats }} seats
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

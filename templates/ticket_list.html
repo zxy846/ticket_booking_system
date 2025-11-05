@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Ticket Management - Aviation Management System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Ticket List</h1>
+
+    <!-- 显示消息 -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- 搜索表单 -->
+    <form method="get" class="search-form">
+        <input type="text"
+               name="search"
+               class="search-input"
+               placeholder="Search by booking number, seat number, passenger name, or flight number..."
+               value="{{ search_query }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+        {% if search_query %}
+            <a href="{% url 'ticket_list' %}" class="btn btn-secondary">Clear Search</a>
+        {% endif %}
+    </form>
+
+    <!-- 添加机票按钮 -->
+    <div class="mb-lg">
+        <a href="{% url 'ticket_create' %}" class="btn btn-success btn-lg">+ Create New Ticket</a>
+    </div>
+
+    <!-- 机票列表 -->
+    {% if tickets %}
+        <div class="grid grid-cols-auto">
+            {% for ticket in tickets %}
+                <div class="card card-flat card-hover">
+                    <div class="flex flex-between flex-center">
+                        <div>
+                            <h3>Ticket: {{ ticket.booking_reference }}</h3>
+                            <p class="text-muted mb-xs">
+                                🛫 {{ ticket.flight.flight_number }} |
+                                💺 {{ ticket.seat_number }} |
+                                💰 ${{ ticket.price }}
+                            </p>
+                            <p class="text-muted mb-xs">
+                                👤 {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}
+                            </p>
+                            <p class="text-muted text-sm">
+                                Status:
+                                <span style="color: {% if ticket.status == 'confirmed' %}#28a745{% else %}#dc3545{% endif %};">
+                                    {{ ticket.get_status_display }}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-info">Details</a>
+                            <a href="{% url 'ticket_update' ticket.id %}" class="btn btn-success">Edit</a>
+                            <!-- 删除表单 -->
+                            <form method="post" action="{% url 'ticket_delete' ticket.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete ticket {{ ticket.booking_reference }}?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card text-center p-lg">
+            <h3 class="text-muted mb-md">{% if search_query %}No relevant tickets found{% else %}No ticket data available{% endif %}</h3>
+            <p class="text-muted mb-lg">
+                {% if search_query %}
+                    Please try other search keywords
+                {% else %}
+                    Click 'Create New Ticket' to add the first ticket record
+                {% endif %}
+            </p>
+            <a href="{% url 'ticket_create' %}" class="btn btn-success btn-lg">+ Create New Ticket</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

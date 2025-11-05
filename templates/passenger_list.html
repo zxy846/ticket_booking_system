@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Passenger List - Aviation Management System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Passenger List</h1>
+
+    <!-- 显示消息 -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- 搜索表单 -->
+    <form method="get" class="search-form">
+        <input type="text"
+               name="search"
+               class="search-input"
+               placeholder="Search by passenger name, email or phone..."
+               value="{{ search_query }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+        {% if search_query %}
+            <a href="{% url 'passenger_list' %}" class="btn btn-secondary">Clear Search</a>
+        {% endif %}
+    </form>
+
+    <!-- 添加乘客按钮 -->
+    <div class="mb-lg">
+        <a href="{% url 'passenger_create' %}" class="btn btn-success btn-lg">+ Add New Passenger</a>
+    </div>
+
+    <!-- 乘客列表 -->
+    {% if passengers %}
+        <div class="grid grid-cols-auto">
+            {% for passenger in passengers %}
+                <div class="card card-flat card-hover">
+                    <div class="flex flex-between flex-center">
+                        <div>
+                            <h3>{{ passenger.first_name }} {{ passenger.last_name }}</h3>
+                            <p class="text-muted mb-xs">email: {{ passenger.email }}</p>
+                            <p class="text-muted text-sm">phone: {{ passenger.phone_number }}</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="{% url 'passenger_detail' passenger.id %}" class="btn btn-info">Details</a>
+                            <a href="{% url 'passenger_update' passenger.id %}" class="btn btn-success">Edit</a>
+                            <!-- 删除表单 -->
+                            <form method="post" action="{% url 'passenger_delete' passenger.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete {{ passenger.first_name }} {{ passenger.last_name }}?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card text-center p-lg">
+            <h3 class="text-muted mb-md">{% if search_query %}No relevant passenger found{% else %}No passenger data available{% endif %}</h3>
+            <p class="text-muted mb-lg">
+                {% if search_query %}
+                    Please try other search keywords
+                {% else %}
+                    Click 'Add New Passenger' to create the first passenger record
+                {% endif %}
+            </p>
+            <a href="{% url 'passenger_create' %}" class="btn btn-success btn-lg">+ Add New Passenger</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

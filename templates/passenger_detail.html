@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ passenger.first_name }} {{ passenger.last_name }} - 乘客详情{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="flex flex-between flex-center mb-lg">
+        <h1>Passenger Details</h1>
+        <div class="flex gap-sm">
+            <a href="{% url 'passenger_list' %}" class="btn btn-secondary">← Back to List</a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-auto gap-md">
+        <div class="info-item">
+            <div class="info-label">Passenger ID</div>
+            <div>{{ passenger.id }}</div>
+        </div>
+        
+        <div class="info-item">
+            <div class="info-label">Name</div>
+            <div style="font-size: 1.2rem; font-weight: bold;">
+                {{ passenger.first_name }} {{ passenger.last_name }}
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Email</div>
+            <div>{{ passenger.email }}</div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Phone</div>
+            <div>{{ passenger.phone_number }}</div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
