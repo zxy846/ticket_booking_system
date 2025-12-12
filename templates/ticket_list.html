@@ -4,7 +4,13 @@
 
 {% block content %}
 <div class="card">
-    <h1>Ticket List</h1>
+    <!-- 标题和添加按钮在同一行 -->
+    <div class="flex flex-between flex-center mb-lg">
+        <h1>Ticket List</h1>
+        {% if perms.tickets.can_add_ticket %}
+        <a href="{% url 'ticket_create' %}" class="btn btn-primary">+ Add New Ticket</a>
+        {% endif %}
+    </div>
 
     <!-- 显示消息 -->
     {% if messages %}
@@ -27,11 +33,6 @@
             <a href="{% url 'ticket_list' %}" class="btn btn-secondary">Clear Search</a>
         {% endif %}
     </form>
-
-    <!-- 添加机票按钮 -->
-    <div class="mb-lg">
-        <a href="{% url 'ticket_create' %}" class="btn btn-success btn-lg">+ Create New Ticket</a>
-    </div>
 
     <!-- 机票列表 -->
     {% if tickets %}
@@ -56,9 +57,14 @@
                                 </span>
                             </p>
                         </div>
-                        <div class="btn-group">
+                        <div class="flex gap-sm">
                             <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-info">Details</a>
+
+                            {% if perms.tickets.can_change_ticket %}
                             <a href="{% url 'ticket_update' ticket.id %}" class="btn btn-success">Edit</a>
+                            {% endif %}
+
+                            {% if perms.tickets.can_delete_ticket %}
                             <!-- 删除表单 -->
                             <form method="post" action="{% url 'ticket_delete' ticket.id %}" style="display: inline;">
                                 {% csrf_token %}
@@ -67,6 +73,7 @@
                                     Delete
                                 </button>
                             </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -79,10 +86,12 @@
                 {% if search_query %}
                     Please try other search keywords
                 {% else %}
-                    Click 'Create New Ticket' to add the first ticket record
+                    Click 'Add New Ticket' to add the first ticket record
                 {% endif %}
             </p>
-            <a href="{% url 'ticket_create' %}" class="btn btn-success btn-lg">+ Create New Ticket</a>
+            {% if perms.tickets.can_add_ticket %}
+            <a href="{% url 'ticket_create' %}" class="btn btn-primary">+ Add New Ticket</a>
+            {% endif %}
         </div>
     {% endif %}
 </div>

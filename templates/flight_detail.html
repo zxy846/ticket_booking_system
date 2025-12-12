@@ -6,7 +6,9 @@
 <div class="card">
     <div class="flex flex-between flex-center mb-lg">
         <h1>Flight Details</h1>
-        <a href="{% url 'flight_list' %}" class="btn btn-secondary">← Back to List</a>
+        <div class="flex gap-sm">
+            <a href="{% url 'flight_list' %}" class="btn btn-secondary">← Back to List</a>
+        </div>
     </div>
 
     <div class="flight-info">
@@ -43,6 +45,40 @@
                 {{ flight.available_seats }} seats
             </div>
         </div>
+
+        <div class="info-item">
+            <div class="info-label">Ticket Price</div>
+            <div style="font-size: 1.2rem; font-weight: bold; color: #2a5298;">
+                ${{ flight.ticket_price }}
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+.flight-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.info-item {
+    padding: var(--space-md);
+    background: #f8f9fa;
+    border-radius: var(--border-radius);
+    border: 1px solid #dee2e6;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #666;
+    margin-bottom: var(--space-xs);
+    font-size: 0.9rem;
+}
+
+.info-item > div:not(.info-label) {
+    font-size: 1rem;
+}
+</style>
 {% endblock %}

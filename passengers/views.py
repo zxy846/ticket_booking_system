@@ -1,10 +1,15 @@
+# views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import Passenger
 from .forms import PassengerForm
 
 
+# 乘客列表 - 需要登录和查看权限
+@login_required
+@permission_required('passengers.can_view_passenger', raise_exception=True)
 def passenger_list(request):
     passengers = Passenger.objects.all()
 
@@ -24,11 +29,17 @@ def passenger_list(request):
     })
 
 
+# 乘客详情 - 需要登录和查看权限
+@login_required
+@permission_required('passengers.can_view_passenger', raise_exception=True)
 def passenger_detail(request, id):
     passenger = get_object_or_404(Passenger, id=id)
     return render(request, 'passenger_detail.html', {'passenger': passenger})
 
 
+# 创建乘客 - 需要登录和添加权限
+@login_required
+@permission_required('passengers.can_add_passenger', raise_exception=True)
 def passenger_create(request):
     if request.method == 'POST':
         form = PassengerForm(request.POST)
@@ -45,6 +56,9 @@ def passenger_create(request):
     })
 
 
+# 编辑乘客 - 需要登录和修改权限
+@login_required
+@permission_required('passengers.can_change_passenger', raise_exception=True)
 def passenger_update(request, id):
     passenger = get_object_or_404(Passenger, id=id)
 
@@ -64,6 +78,9 @@ def passenger_update(request, id):
     })
 
 
+# 删除乘客 - 需要登录和删除权限
+@login_required
+@permission_required('passengers.can_delete_passenger', raise_exception=True)
 def passenger_delete(request, id):
     passenger = get_object_or_404(Passenger, id=id)
 

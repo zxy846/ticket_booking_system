@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Aviation Management System{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 2rem auto; padding: 2rem;">
+    <h1 style="text-align: center; margin-bottom: 1.5rem;">Login</h1>
+
+    {% if form.errors or error %}
+    <div class="alert alert-error" style="background: #f8d7da; color: #721c24; padding: 0.75rem; border-radius: 0.25rem; margin-bottom: 1rem;">
+        Your username and password didn't match. Please try again.
+    </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div style="margin-bottom: 1rem;">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" class="form-control" required autofocus>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+
+        <!-- 强制重定向到航班列表 -->
+        <input type="hidden" name="next" value="{% url 'flight_list' %}">
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Login</button>
+    </form>
+
+    <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem; color: #666;">
+        <p><strong>Test Accounts:</strong></p>
+        <p>viewer / viewer123 (View only)</p>
+        <p>editor / editor123 (View, Add, Edit)</p>
+        <p>admin / admin123 (All permissions)</p>
+    </div>
+</div>
+
+<style>
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-top: 0.25rem;
+}
+
+.btn-primary {
+    background-color: #2a5298;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #1e3c72;
+}
+
+.card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}

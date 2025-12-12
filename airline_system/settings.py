@@ -131,3 +131,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/flights/login/'
+LOGIN_REDIRECT_URL = '/flights/'  # 登录成功后重定向到航班列表
+LOGOUT_REDIRECT_URL = '/flights/login/' # 登出后重定向
+SESSION_SAVE_EVERY_REQUEST = True

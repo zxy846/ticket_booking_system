@@ -4,78 +4,76 @@
 
 {% block content %}
 <div class="card">
+    <div class="flex flex-between flex-center mb-lg">
         <h1>Flight List</h1>
+        {% if perms.flights.can_add_flight %}
+        <a href="{% url 'flight_create' %}" class="btn btn-primary">+ Add New Flight</a>
+        {% endif %}
+    </div>
 
-    <!-- 显示消息 -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-
-     <!-- 搜索表单 -->
     <form method="get" class="search-form">
         <input type="text" name="search" class="search-input"
-               placeholder="Search by flight number, departure or arrival airport..." value="{{ search_query }}">
+               placeholder="Search by flight number, departure or arrival airport..."
+               value="{{ search_query }}">
         <button type="submit" class="btn btn-primary">Search</button>
         {% if search_query %}
-            <a href="{% url 'flight_list' %}" class="btn btn-secondary">Clear Search</a>
+        <a href="{% url 'flight_list' %}" class="btn btn-secondary">Clear Search</a>
         {% endif %}
     </form>
 
-     <div class="mb-lg">
-        <a href="{% url 'flight_create' %}" class="btn btn-success btn-lg">+ Create New Flight</a>
-    </div>
-
     {% if flights %}
-        <div class="flights-container">
-            {% for flight in flights %}
-                <div class="card flight-card card-hover">
-                    <div class="flex flex-between flex-center">
-                        <div>
-                            <h3 class="mb-sm">{{ flight.flight_number }}</h3>
-                            <p class="text-muted mb-xs">
-                                🛫 {{ flight.departure_airport }} → 🛬 {{ flight.arrival_airport }}
-                            </p>
-                            <p class="text-muted text-sm mb-xs">
-                                Departure: {{ flight.departure_time|date:"Y-m-d H:i" }}
-                            </p>
-                            <p class="text-muted text-sm">
-                                Seats: {{ flight.available_seats }}/{{ flight.total_seats }}
-                            </p>
-                        </div>
-                        <div class="btn-group">
-                            <a href="{% url 'flight_detail' flight.id %}" class="btn btn-info">Details</a>
-                            <a href="{% url 'flight_update' flight.id %}" class="btn btn-success">Edit</a>
-                            <!-- 删除表单 -->
-                            <form method="post" action="{% url 'flight_delete' flight.id %}" style="display: inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Are you sure you want to delete flight {{ flight.flight_number }}?')">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+    <div class="flights-container">
+        {% for flight in flights %}
+        <div class="card flight-card card-hover">
+            <div class="flex flex-between flex-center">
+                <div>
+                    <h3 class="mb-sm">{{ flight.flight_number }}</h3>
+                    <p class="text-muted mb-xs">
+                        🛫 {{ flight.departure_airport }} → 🛬 {{ flight.arrival_airport }}
+                    </p>
+                    <p class="text-muted text-sm mb-xs">
+                        Departure: {{ flight.departure_time|date:"Y-m-d H:i" }}
+                    </p>
+                    <p class="text-muted text-sm">
+                        Seats: {{ flight.available_seats }}/{{ flight.total_seats }}
+                    </p>
                 </div>
-            {% endfor %}
+                <div class="flex gap-sm">
+                    <a href="{% url 'flight_detail' flight.id %}" class="btn btn-info">Details</a>
+                    {% if perms.flights.can_change_flight %}
+                    <a href="{% url 'flight_update' flight.id %}" class="btn btn-success">Edit</a>
+                    {% endif %}
+                    {% if perms.flights.can_delete_flight %}
+                    <!-- 修改这里：使用表单而不是链接 -->
+                    <form method="post" action="{% url 'flight_delete' flight.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete flight {{ flight.flight_number }}?')">
+                            Delete
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
         </div>
+        {% endfor %}
+    </div>
     {% else %}
-        <div class="card text-center p-lg">
-            <h3 class="text-muted mb-md">
-                {% if search_query %}No flights found{% else %}No flight data available{% endif %}
-            </h3>
-            <p class="text-muted mb-lg">
-                {% if search_query %}
-                    Please try different search keywords
-                {% else %}
-                    Click "Add New Flight" to create your first flight
-                {% endif %}
-            </p>
-            <a href="{% url 'flight_create' %}" class="btn btn-primary btn-lg">+ Add New Flight</a>
-        </div>
+    <div class="card text-center p-lg">
+        <h3 class="text-muted mb-md">
+            {% if search_query %}No flights found{% else %}No flight data available{% endif %}
+        </h3>
+        <p class="text-muted mb-lg">
+            {% if search_query %}
+            Please try different search keywords
+            {% else %}
+            Click "Add New Flight" to create your first flight
+            {% endif %}
+        </p>
+        {% if perms.flights.can_add_flight %}
+        <a href="{% url 'flight_create' %}" class="btn btn-primary">+ Add New Flight</a>
+        {% endif %}
+    </div>
     {% endif %}
 </div>
 {% endblock %}

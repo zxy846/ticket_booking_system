@@ -4,7 +4,13 @@
 
 {% block content %}
 <div class="card">
-    <h1>Passenger List</h1>
+    <!-- 标题和添加按钮在同一行 -->
+    <div class="flex flex-between flex-center mb-lg">
+        <h1>Passenger List</h1>
+        {% if perms.passengers.can_add_passenger %}
+        <a href="{% url 'passenger_create' %}" class="btn btn-primary">+ Add New Passenger</a>
+        {% endif %}
+    </div>
 
     <!-- 显示消息 -->
     {% if messages %}
@@ -28,11 +34,6 @@
         {% endif %}
     </form>
 
-    <!-- 添加乘客按钮 -->
-    <div class="mb-lg">
-        <a href="{% url 'passenger_create' %}" class="btn btn-success btn-lg">+ Add New Passenger</a>
-    </div>
-
     <!-- 乘客列表 -->
     {% if passengers %}
         <div class="grid grid-cols-auto">
@@ -44,9 +45,14 @@
                             <p class="text-muted mb-xs">email: {{ passenger.email }}</p>
                             <p class="text-muted text-sm">phone: {{ passenger.phone_number }}</p>
                         </div>
-                        <div class="btn-group">
+                        <div class="flex gap-sm">
                             <a href="{% url 'passenger_detail' passenger.id %}" class="btn btn-info">Details</a>
+
+                            {% if perms.passengers.can_change_passenger %}
                             <a href="{% url 'passenger_update' passenger.id %}" class="btn btn-success">Edit</a>
+                            {% endif %}
+
+                            {% if perms.passengers.can_delete_passenger %}
                             <!-- 删除表单 -->
                             <form method="post" action="{% url 'passenger_delete' passenger.id %}" style="display: inline;">
                                 {% csrf_token %}
@@ -55,6 +61,7 @@
                                     Delete
                                 </button>
                             </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -70,7 +77,9 @@
                     Click 'Add New Passenger' to create the first passenger record
                 {% endif %}
             </p>
-            <a href="{% url 'passenger_create' %}" class="btn btn-success btn-lg">+ Add New Passenger</a>
+            {% if perms.passengers.can_add_passenger %}
+            <a href="{% url 'passenger_create' %}" class="btn btn-primary">+ Add New Passenger</a>
+            {% endif %}
         </div>
     {% endif %}
 </div>

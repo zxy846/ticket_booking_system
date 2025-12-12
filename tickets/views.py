@@ -1,10 +1,15 @@
+# tickets/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import Ticket
 from .forms import TicketForm
 
 
+# 机票列表 - 需要登录和查看权限
+@login_required
+@permission_required('tickets.can_view_ticket', raise_exception=True)
 def ticket_list(request):
     tickets = Ticket.objects.all().select_related('flight', 'passenger')
 
@@ -25,11 +30,17 @@ def ticket_list(request):
     })
 
 
+# 机票详情 - 需要登录和查看权限
+@login_required
+@permission_required('tickets.can_view_ticket', raise_exception=True)
 def ticket_detail(request, id):
     ticket = get_object_or_404(Ticket.objects.select_related('flight', 'passenger'), id=id)
     return render(request, 'ticket_detail.html', {'ticket': ticket})
 
 
+# 创建机票 - 需要登录和添加权限
+@login_required
+@permission_required('tickets.can_add_ticket', raise_exception=True)
 def ticket_create(request):
     if request.method == 'POST':
         form = TicketForm(request.POST)
@@ -46,6 +57,9 @@ def ticket_create(request):
     })
 
 
+# 编辑机票 - 需要登录和修改权限
+@login_required
+@permission_required('tickets.can_change_ticket', raise_exception=True)
 def ticket_update(request, id):
     ticket = get_object_or_404(Ticket, id=id)
 
@@ -65,6 +79,9 @@ def ticket_update(request, id):
     })
 
 
+# 删除机票 - 需要登录和删除权限
+@login_required
+@permission_required('tickets.can_delete_ticket', raise_exception=True)
 def ticket_delete(request, id):
     ticket = get_object_or_404(Ticket, id=id)
 
