@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}航班结果{% endblock %}
+{% block content %}
+<h2>航班搜索结果</h2>
+{% if search_params %}
+<p class="text-muted">
+  搜索条件: {{ search_params.dep }} → {{ search_params.arr }} | 日期: {{ search_params.date }}
+</p>
+{% endif %}
+
+<table class="table table-striped align-middle">
+  <thead class="table-primary">
+    <tr><th>航班号</th><th>出发 → 到达</th><th>出发时间</th><th>价格</th><th>操作</th></tr>
+  </thead>
+  <tbody>
+  {% for f in flights %}
+    <tr>
+      <td>{{ f.flight_number }}</td>
+      <td>{{ f.departure_airport.city }} → {{ f.arrival_airport.city }}</td>
+      <td>{{ f.departure_time|date:"Y-m-d H:i" }}</td>
+      <td>¥{{ f.price }}</td>
+      <td><a class="btn btn-sm btn-primary" href="{% url 'flights:flight_detail' f.id %}">选择</a></td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5" class="text-center">暂无符合条件的航班</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

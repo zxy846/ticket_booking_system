@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}首页{% endblock %}
+{% block content %}
+<h2 class="mb-3">搜索航班</h2>
+<form method="get" action="{% url 'flights:flight_results' %}" class="row g-3" id="search-form">
+  <div class="col-md-4">
+      <label class="form-label">出发地</label>
+      <input type="text" name="dep" class="form-control" placeholder="如：北京" required id="dep-input">
+  </div>
+  <div class="col-md-4">
+      <label class="form-label">目的地</label>
+      <input type="text" name="arr" class="form-control" placeholder="如：上海" required id="arr-input">
+  </div>
+  <div class="col-md-2">
+      <label class="form-label">出发日期</label>
+      <input type="date" name="date" class="form-control" required id="date-input" min="{{ today|date:'Y-m-d' }}">
+  </div>
+  <div class="col-md-2 d-flex align-items-end">
+      <button type="submit" class="btn btn-success w-100">搜索</button>
+  </div>
+</form>
+
+<!-- 添加说明文字 -->
+<div class="mt-4">
+  <div class="alert alert-info">
+    <h5>使用说明：</h5>
+    <p>1. 填写出发地、目的地和日期</p>
+    <p>2. 点击"搜索"按钮查看航班结果</p>
+    <p>3. 从结果中选择合适的航班进行预订</p>
+  </div>
+</div>
+
+<script>
+// 设置最小日期为今天
+document.getElementById('date-input').min = new Date().toISOString().split('T')[0];
+
+// 表单验证
+document.getElementById('search-form').addEventListener('submit', function(e) {
+    const dep = document.getElementById('dep-input').value.trim();
+    const arr = document.getElementById('arr-input').value.trim();
+    const date = document.getElementById('date-input').value;
+
+    if (!dep || !arr || !date) {
+        e.preventDefault();
+        alert('请填写所有搜索条件！');
+        return false;
+    }
+
+    if (dep === arr) {
+        e.preventDefault();
+        alert('出发地和目的地不能相同！');
+        return false;
+    }
+
+    return true;
+});
+</script>
+{% endblock %}

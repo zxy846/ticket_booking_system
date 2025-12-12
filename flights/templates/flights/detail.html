@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}航班详情{% endblock %}
+{% block content %}
+<h2>航班 {{ flight.flight_number }}</h2>
+<div class="card mb-4">
+  <div class="card-body">
+    <h5>{{ flight.departure_airport.city }} → {{ flight.arrival_airport.city }}</h5>
+    <p class="mb-1"><strong>出发时间：</strong>{{ flight.departure_time }}</p>
+    <p class="mb-1"><strong>到达时间：</strong>{{ flight.arrival_time }}</p>
+    <p class="mb-1"><strong>机型：</strong>{{ flight.aircraft_type }}</p>
+    <p class="mb-1"><strong>行李限额：</strong>{{ flight.baggage_allowance }} kg</p>
+    <p class="mb-1"><strong>价格：</strong>¥{{ flight.price }}</p>
+  </div>
+</div>
+<a class="btn btn-success" href="{% url 'bookings:booking_create' flight.id %}">立即预订</a>
+{% endblock %}
